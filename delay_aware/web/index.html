@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#253d32">
+  <title>Delay Aware — Find your smoother flight</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true"><defs>
+    <symbol id="plane" viewBox="0 0 24 24"><path d="m21 3-6.5 18-3.8-7.7L3 9.5 21 3Z M10.7 13.3 21 3"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="spark" viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z"/></symbol>
+    <symbol id="pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="swap" viewBox="0 0 24 24"><path d="M4 8h15l-4-4m5 12H5l4 4"/></symbol>
+  </defs></svg>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Delay Aware home"><span class="brand-mark"><svg class="icon"><use href="#plane"/></svg></span>delay<span class="brand-light">aware</span><span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation"><a class="nav-active" href="#search-form">Find flights</a><button id="about-button" class="nav-button">About the data</button></nav>
+    <span class="local-badge"><span class="status-dot"></span>On your Mac</span>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div><p class="eyebrow"><span></span> A LITTLE MORE CERTAINTY, BEFORE YOU FLY</p><h1>Good trips start with<br><em>better flight choices.</em></h1><p class="hero-copy">Find your flight. Understand its history. Explore your options.</p></div>
+      <div class="hero-note"><svg class="icon"><use href="#spark"/></svg><p>Your flight research,<br>with an assistant beside you.</p><span>US domestic · Up to one connection · One way</span></div>
+    </section>
+
+    <section class="search-panel" aria-label="Flight search">
+      <div class="search-caption"><span class="trip-label">One-way journey <span>↗</span></span><span>Travel in the next 30 days</span></div>
+      <form id="search-form">
+        <div class="airport-fields">
+          <label>From<input id="origin" name="origin" list="airport-options" value="BOS" autocomplete="off" required aria-label="Departure airport"><span id="origin-name" class="field-hint">Departure airport</span></label>
+          <button id="swap-button" class="swap-button" type="button" aria-label="Swap departure and arrival airports"><svg class="icon"><use href="#swap"/></svg></button>
+          <label>To<input id="destination" name="destination" list="airport-options" value="ORD" autocomplete="off" required aria-label="Arrival airport"><span id="destination-name" class="field-hint">Arrival airport</span></label>
+        </div>
+        <label>Departure<input id="departure" name="departure" type="date" required><span class="field-hint">Dates flexible? We can compare ±1 day.</span></label>
+        <label>Max fare <span class="optional">optional</span><div class="budget-input"><span>$</span><input id="budget" name="budget" type="number" min="1" step="1" placeholder="No limit" aria-label="Maximum displayed fare in US dollars"></div><span class="field-hint">USD · 1 adult · Economy</span></label>
+        <button id="search-button" class="button primary" type="submit">Find flights <svg class="icon"><use href="#arrow"/></svg></button>
+      </form>
+      <label class="journey-filter" for="itinerary-type">Flight options<select id="itinerary-type" name="itinerary_type" form="search-form"><option value="all">All — nonstop &amp; one connection</option><option value="nonstop">Nonstop only</option><option value="one_connection">One connection only</option></select><span class="field-hint">Connecting ticket types are checked when you select a journey.</span></label>
+      <datalist id="airport-options"></datalist>
+      <p id="search-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <div class="workspace">
+      <section class="flight-column" aria-label="Flight results">
+        <div class="section-heading"><div><p class="eyebrow">YOUR JOURNEY</p><h2 id="results-title">A clearer view of your options</h2></div><label id="sort-label" class="sort-label" hidden>Sort by<select id="sort"><option value="price">Lowest fare</option><option value="departure">Departure time</option><option value="duration">Flight duration</option></select></label></div>
+        <p id="result-meta" class="result-meta">Start with a route and date. Your flight options will appear here.</p>
+        <p id="result-notice" class="source-footnote" hidden></p>
+        <section id="report" class="report-panel" aria-label="Selected journey and flight histories" hidden></section>
+        <section id="alternatives" class="alternatives-panel" aria-label="Alternative flights" hidden></section>
+        <div id="results" aria-live="polite">
+          <div class="empty-state">
+            <div class="route-art" aria-hidden="true"><span class="route-origin"></span><span class="route-arc"></span><span class="route-destination"></span><svg class="icon"><use href="#plane"/></svg><span class="art-caption art-left">WHERE YOU ARE</span><span class="art-caption art-right">WHERE YOU'RE GOING</span></div>
+            <h3>A little research. A smoother journey.</h3><p>Search for a flight, then select an option to explore<br>its history, weather, and possible alternatives.</p>
+            <div class="empty-features"><span>01 <b>Find your flight</b></span><span>02 <b>Check the evidence</b></span><span>03 <b>Compare options</b></span></div>
+          </div>
+        </div>
+        <p class="source-footnote">Quoted fares can change. Extra fees and ground transport may cost more. All flight times are local to each airport.</p>
+      </section>
+
+      <aside id="assistant-panel" class="assistant-panel" aria-label="Flight assistant">
+        <div class="assistant-header"><span class="assistant-emblem"><svg class="icon"><use href="#spark"/></svg></span><div><h2>Your flight assistant</h2><p id="assistant-status">Connecting to your local model…</p></div><span class="assistant-live" aria-hidden="true"></span></div>
+        <div class="model-row"><label for="model">Local model</label><select id="model" aria-label="Assistant model"><option value="gpt-oss:20b">gpt-oss:20b</option><option value="devstral:24b">devstral:24b</option></select></div>
+        <div id="selected-context" class="selected-context" hidden></div>
+        <div id="conversation" class="conversation" role="log" aria-label="Conversation" aria-live="polite">
+          <div class="assistant-welcome"><span class="welcome-icon"><svg class="icon"><use href="#spark"/></svg></span><h3>A second look,<br>before you book.</h3><p>Select a flight and I’ll help you understand what the available data says.</p><ul><li>Explore past delays and cancellations</li><li>Check weather for your travel date</li><li>Compare nearby airports and dates</li></ul><p class="welcome-note">When evidence is missing, I’ll say so.</p></div>
+        </div>
+        <div class="chat-bottom"><div id="quick-prompts" class="quick-prompts" hidden><button data-prompt="Give me a brief traveler-focused assessment: current status and expected arrival, past delays and cancellations, and any important uncertainty. Combine the available evidence without discussing data providers.">Assess flight</button><button data-prompt="Check the weather for this flight's departure and arrival dates.">Check weather</button><button data-prompt="Find alternatives and explain the price and reliability tradeoffs, using only available evidence.">Compare options</button></div><form id="chat-form"><label class="sr-only" for="message">Ask your flight assistant</label><textarea id="message" rows="2" maxlength="3000" placeholder="Select a flight to start a conversation…" disabled></textarea><button id="send-button" class="send-button" type="submit" aria-label="Send message" disabled><svg class="icon"><use href="#arrow"/></svg></button></form><p class="chat-caption">Local AI · Answers grounded in available flight data</p></div>
+      </aside>
+    </div>
+    <button id="assistant-toggle" class="assistant-toggle" aria-controls="assistant-panel" aria-expanded="false">Ask assistant ↗</button>
+    <footer><span class="brand-small">delayaware.</span><span>More information. A more considered choice.</span><span>Built for the journey ahead ↗</span></footer>
+  </main>
+
+  <dialog id="about-dialog"><div class="dialog-heading"><h2>The evidence behind your options</h2><button id="close-about" aria-label="Close data information">×</button></div><p>Flight listings and quoted fares come from SerpApi’s Google Flights results. Airport information comes from OurAirports. Date-specific weather comes from the National Weather Service.</p><p>FlightAware AeroAPI supplies available selected-departure identity, recent measured gate-arrival history, and current estimates. Current estimates and historical delay rates are shown separately. Flight history combines BTS Marketing Carrier and Reporting Carrier records, with a target of 24 months. Marketing records identify historical operating flights. Matching uses date, operating airline and flight number, route, and scheduled departure time. Each operation is counted once, source coverage is shown, and conflicting records are excluded. Historical relationships do not verify the operator of a future departure; an exact FlightAware match can establish the selected operating flight separately. History is not a live forecast.</p><p id="history-setup-note">Checking historical coverage…</p><p>The assistant runs through Ollama on your Mac. Live flight and weather requests still require internet access. It cannot book tickets or make payments.</p></dialog>
+</body>
+</html>

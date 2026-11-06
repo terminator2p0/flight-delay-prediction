@@ -1,0 +1,12 @@
+data/
+outputs/
+__pycache__/
+.ipynb_checkpoints
+*.pyc
+*.pkl
+.env
+.env.*
+!.env.example
+.venv/
+*.egg-info/
+.DS_Store
